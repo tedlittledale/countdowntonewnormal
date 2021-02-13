@@ -118,7 +118,7 @@ const Breakdown = ({
           <p>
             This was built by{" "}
             <a
-              href="https://twitter.com/home"
+              href="https://twitter.com/_superted"
               target="_black"
               rel="noreferrer noopener"
             >
@@ -126,7 +126,7 @@ const Breakdown = ({
             </a>
             . Please check out some of{" "}
             <a
-              href="https://tedspace.me/datavis"
+              href="https://tedspace.me/#dataviz"
               target="_black"
               rel="noreferrer noopener"
             >
