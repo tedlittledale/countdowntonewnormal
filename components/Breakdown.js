@@ -29,14 +29,14 @@ const Wrapper = styled("div")`
   `}
     display: grid;
     align-items: start;
-    justify-items: center;
+    justify-items: left;
   }
   h3 {
     font-size: 40px;
     margin-top: 20px;
     font-weight: 600;
     font-style: italic;
-
+    justify-self: center;
     @media (max-height: 627px) {
       font-size: 30px;
       margin-top: 10px;
