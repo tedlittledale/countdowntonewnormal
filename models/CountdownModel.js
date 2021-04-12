@@ -20,6 +20,7 @@ export const CountdownModel = types
   .model("TimelineModel", {
     allData: types.array(DataLine),
     sevenDayAverage: types.maybeNull(types.string),
+    fourteenDayAverage: types.maybeNull(types.string),
     herdDate: types.maybeNull(types.string),
     markers: types.array(Marker),
     daysToHerd: types.maybeNull(types.number),
@@ -30,17 +31,17 @@ export const CountdownModel = types
       if (data.length === 0) {
         return;
       }
-      console.log({ data });
       let latestTotal,
         latestTotal2ndDose,
         lastUpdated,
         sevenDayValues = 0,
+        fourteenDayValues = 0,
         sevenDayValues2ndDose = 0;
 
       const UKPop = 67886011;
       const ninetyPercentPop = Math.round(UKPop * 0.9);
       const eightyPercentPop = Math.round(UKPop * 0.8);
-
+      console.log(data.length);
       const cleanData = data.map(
         (
           {
@@ -61,6 +62,9 @@ export const CountdownModel = types
             sevenDayValues += newPeopleVaccinatedFirstDoseByPublishDate;
             sevenDayValues2ndDose += newPeopleVaccinatedSecondDoseByPublishDate;
           }
+          if (idx <= 13) {
+            fourteenDayValues += newPeopleVaccinatedFirstDoseByPublishDate;
+          }
           return {
             date,
             newPeopleVaccinatedFirstDoseByPublishDate,
@@ -72,12 +76,11 @@ export const CountdownModel = types
       );
 
       const sevenDayAverage = Math.round(sevenDayValues / 7);
+      const fourtheenDayAverage = Math.round(fourteenDayValues / 14);
       const sevenDayAverage2ndDose = Math.round(sevenDayValues2ndDose / 7);
-      console.log({ sevenDayAverage, sevenDayAverage2ndDose });
       const getTargetDate = ({ targetPop, latestTotal, average }) => {
         const remaining = targetPop - latestTotal;
         const daysToTarget = Math.ceil(remaining / average);
-        console.log({ targetPop, latestTotal, remaining, daysToTarget });
         const addDay = compose(addDays(daysToTarget));
         return {
           date: addDay(lastUpdated),
@@ -88,7 +91,7 @@ export const CountdownModel = types
       const { date: ninetyPercentDate } = getTargetDate({
         targetPop: ninetyPercentPop,
         latestTotal,
-        average: sevenDayAverage
+        average: fourtheenDayAverage
       });
       const { date: nightyPercent2ndDoseDate } = getTargetDate({
         targetPop: ninetyPercentPop,
@@ -98,14 +101,14 @@ export const CountdownModel = types
       const { date: eightyPercentDate, days: daysToHerd } = getTargetDate({
         targetPop: eightyPercentPop,
         latestTotal,
-        average: sevenDayAverage
+        average: fourtheenDayAverage
       });
       console.log({ nightyPercent2ndDoseDate });
 
       self.allData = data;
       self.daysToHerd = daysToHerd;
       self.sevenDayAverage = numeral(sevenDayAverage).format("0.0a");
-      console.log({ lastUpdated });
+      self.fourteenDayAverage = numeral(fourtheenDayAverage).format("0.0a");
       self.herdDate = format("do MMM", eightyPercentDate);
       self.markers = [
         {
@@ -132,12 +135,10 @@ export const CountdownModel = types
       ];
     },
     setPage(newPage) {
-      console.log({ newPage: Math.min(2, Math.max(0, newPage)) });
       self.currentPage = Math.min(2, Math.max(0, newPage));
     },
     updatePage(inc) {
       if (typeof self.timeoutId !== "number") {
-        console.log({ inc });
         self.setPage(self.currentPage + inc);
         self.timeoutId = setTimeout(() => {
           self.timeoutId = clearTimeout(self.timeoutId);
@@ -145,7 +146,6 @@ export const CountdownModel = types
       }
     },
     afterCreate() {
-      console.log("asdf");
       console.log(self, getSnapshot(self));
     }
   }))

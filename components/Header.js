@@ -33,7 +33,7 @@ const Wrapper = styled("header")`
 `;
 
 const Header = ({
-  countdownModel: { daysToHerd, sevenDayAverage, herdDate },
+  countdownModel: { daysToHerd, sevenDayAverage, fourteenDayAverage, herdDate },
   countdownModel,
   pageHeight
 }) => {
@@ -44,6 +44,7 @@ const Header = ({
         <div>
           <SplashCounter
             daysToHerd={daysToHerd}
+            fourteenDayAverage={fourteenDayAverage}
             sevenDayAverage={sevenDayAverage}
             herdDate={herdDate}
           />

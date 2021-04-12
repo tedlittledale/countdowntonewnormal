@@ -92,7 +92,12 @@ const SplashWrapper = styled("div")`
   `}
 `;
 
-const SplashCounter = ({ daysToHerd, sevenDayAverage, herdDate }) => {
+const SplashCounter = ({
+  daysToHerd,
+  sevenDayAverage,
+  fourteenDayAverage,
+  herdDate
+}) => {
   const [timeLeft, setTimeLeft] = useState(0);
   const [dateVisible, setDateVisible] = useState(false);
   useEffect(() => {
@@ -125,7 +130,7 @@ const SplashCounter = ({ daysToHerd, sevenDayAverage, herdDate }) => {
           </span>
         </h1>
         <p>
-          *Based on current 7 day average of {sevenDayAverage} daily
+          *Based on current 14 day average of {fourteenDayAverage} daily
           vaccinations and many assumptions
         </p>
         <p>**Freedom not guaranteed</p>
