@@ -113,7 +113,11 @@ const Breakdown = ({
               How to Vaccinate the World
             </a>{" "}
             podcast if you want to hear from actual experts about the national
-            and international vaccine rollout.
+            and international vaccine rollout. UPDATE: This tool was featured in the listener questions section of <a
+              href="https://www.bbc.co.uk/sounds/play/m000rty5"
+              target="_black"
+              rel="noreferrer noopener"
+            >this episode of How to Vaccinate the world</a>.{" "}
           </p>
           <p>
             This was built by{" "}
@@ -123,8 +127,8 @@ const Breakdown = ({
               rel="noreferrer noopener"
             >
               Ted Littledale
-            </a>
-            . Please check out some of{" "}
+            </a>{" "} in January 2021.
+             Please check out some of{" "}
             <a
               href="https://tedspace.me/#dataviz"
               target="_black"
